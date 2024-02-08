@@ -5,6 +5,7 @@ date-created: 04-02-2024
 '''
 
 import pygame
+import random
 class Box:
     """
     This creates a parent class of a white box that is going to be inherited by other subclasses
@@ -19,7 +20,7 @@ class Box:
         self.__SPEED = SPEED
         self._COLOR = COLOR
         self._SURFACE = pygame.Surface
-        self.__DIR_X = 1
+        self.__DIR_X = random.choice([1, -1])
         self.__DIR_Y = 1
 
     # MODIFIER METHODS
@@ -99,8 +100,8 @@ class Box:
         self.setHeight(HEIGHT)
 
     def bounceXandY(self, MAX_X, MAX_Y, MIN_Y=0, MIN_X=0):
-        self.__X = self.__X + self.__SPEED*self.__DIR_X
-        self.__Y = self.__Y + self.__SPEED*self.__DIR_Y
+        self.__X = self.__X + self.__SPEED * self.__DIR_X
+        self.__Y = self.__Y + self.__SPEED * self.__DIR_Y
         if self.__X > MAX_X - self.getWidth():
             self.__DIR_X = -1
         if self.__X < MIN_X:

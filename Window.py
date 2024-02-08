@@ -10,7 +10,7 @@ class Window:
     """
     This creates a window that serves as the foundation for the brick breaker game
     """
-    def __init__(self, TITLE, WIDTH=1080, HEIGHT=550, FPS=60):
+    def __init__(self, TITLE, WIDTH=1045, HEIGHT=600, FPS=60):
         self.__TITLE = TITLE
         self.__WIDTH = WIDTH
         self.__HEIGHT = HEIGHT
