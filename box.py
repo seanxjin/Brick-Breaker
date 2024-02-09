@@ -35,7 +35,21 @@ class Box:
         if KEYS_PRESSED[pygame.K_a] == 1:
             self.__X = self.__X - self.__SPEED
         self.__POS = (self.__X, self.__Y)
-
+    def WASDmove(self, KEY_PRESSES):
+        """
+        Move the box based on WASD
+        :param HEY_PRESSES: list[int]
+        :return: none
+        """
+        if KEY_PRESSES[pygame.K_d] == 1:
+            self.__X = self.__X + self.__SPEED
+        if KEY_PRESSES[pygame.K_a] == 1:
+            self.__X = self.__X - self.__SPEED
+        if KEY_PRESSES[pygame.K_w] == 1:
+            self.__Y = self.__Y - self.__SPEED
+        if KEY_PRESSES[pygame.K_s] == 1:
+            self.__Y = self.__Y + self.__SPEED
+        self.__POS = (self.__X, self.__Y)
     def setX(self,X):
         """
         Sets the X position of the object
@@ -111,6 +125,33 @@ class Box:
         if self.__Y < MIN_Y:
             self.__DIR_Y = 1
         self.__POS = (self.__X, self.__Y)
+    def isCollision(self, SURFACE, POS):
+        """
+        Boolean function that checks if an current sprites position is overlapping with another sprite
+        :param SURFACE: object
+        :param POS: tuple -> int
+        :return: bool
+        """
+        WIDTH = SURFACE.get_width()
+        HEIGHT = SURFACE.get_height()
+        X = POS[0]
+        Y = POS[1]
+        if X >= self.__X - WIDTH and X <= self.__X + self._SURFACE.get_width():
+            if Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height():
+                return True
+        return False
+    def wrapEdges(self, MAX_X, MAX_Y, MIN_X=0, MIN_Y=0):
+        """
+        When the object goes off the screen, it appears on the side of the screen
+        :param MAX_X: int
+        :param MAX_Y: int
+        :param MIN_X: int
+        :param MIN_Y: int
+        :return: none
+        """
+        if self.__X > MAX_X - self.__WIDTH:
+
+
     # ACCESSOR METHODS
     def getX(self):
         """

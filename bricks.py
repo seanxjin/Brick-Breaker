@@ -43,7 +43,6 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-
         WINDOW.clearScreen()
         for i in range(len(BRICKLIST)):
             for j in range(len(BRICKLIST[i])):
