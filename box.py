@@ -111,6 +111,7 @@ class Box:
         if self.__Y < MIN_Y:
             self.__DIR_Y = 1
         self.__POS = (self.__X, self.__Y)
+
     # ACCESSOR METHODS
     def getX(self):
         """
