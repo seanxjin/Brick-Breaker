@@ -150,8 +150,7 @@ class Box:
         :return: none
         """
         if self.__X > MAX_X - self.__WIDTH:
-
-
+            pass
     # ACCESSOR METHODS
     def getX(self):
         """

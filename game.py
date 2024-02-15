@@ -33,25 +33,32 @@ class Game:
         Runs the game.
         :return: none
         """
+        pass
 
-        pygame.init()
-        GAME_WINDOW = Window("Brick Breaker!")
-        START_SCREEN_STARS = []
-        for i in range(100):
-            WIDTH = randint(2,4)
-            START_SCREEN_STARS.append(Box(WIDTH, WIDTH))
-            START_SCREEN_STARS[-1].setPOS(
-                randint(0,GAME_WINDOW.getWidth() - WIDTH),
-                randint(0,GAME_WINDOW.getHeight() - WIDTH)
-            )
-        while True:
-            for event in event.type.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    exit()
 
-            PRESSED_KEYS = pygame.key.get_pressed()
+if __name__ == "__main__":
+    pygame.init()
+    GAME_WINDOW = Window("Brick Breaker!")
+    START_SCREEN_STARS = []
+    for i in range(200):
+        WIDTH = randint(3, 5)
+        START_SCREEN_STARS.append(Ball(WIDTH, WIDTH))
+        START_SCREEN_STARS[-1].setPOS(
+            randint(0, GAME_WINDOW.getWidth() - WIDTH),
+            randint(0, GAME_WINDOW.getHeight() - WIDTH)
+        )
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
 
-            for i in range(len(START_SCREEN_STARS)):
-                START_SCREEN_STARS[i].WASDmove(PRESSED_KEYS)
-            GAME_WINDOW.clearScreen()
+        PRESSED_KEYS = pygame.key.get_pressed()
+
+        for star in START_SCREEN_STARS:
+            star.WASDmove(PRESSED_KEYS)
+
+        GAME_WINDOW.clearScreen()
+        for stars in START_SCREEN_STARS:
+            GAME_WINDOW.getSurface().blit(stars.getSurface(), stars.getPOS())
+        GAME_WINDOW.updateFrame()

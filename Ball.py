@@ -8,9 +8,10 @@ from box import Box
 import pygame
 
 class Ball(Box):
-    def __init__(self):
-        Box.__init__(self)
+    def __init__(self, WIDTH=2, HEIGHT=2):
+        Box.__init__(self, WIDTH, HEIGHT)
         self._SURFACE = pygame.Surface(self._DIM, pygame.SRCALPHA, 32)
+        self._SURFACE.fill(self._COLOR)
 
     # MODIFIER METHODS
     def setWidth(self, WIDTH):
