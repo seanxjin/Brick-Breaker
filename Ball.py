@@ -25,6 +25,21 @@ class Ball(Box):
         self.setWidth(WIDTH)
         self.setHeight(HEIGHT)
         self._SURFACE.fill(self._COLOR)
+    def isCollision(self, SURFACE, POS):
+        """
+        Boolean function that checks if a current sprites position is overlapping with another sprite
+        :param SURFACE: object
+        :param POS: tuple -> int
+        :return: bool
+        """
+        WIDTH = SURFACE.get_width()
+        HEIGHT = SURFACE.get_height()
+        X = POS[0]
+        Y = POS[1]
+        if X >= self.__X - WIDTH and X <= self.__X + self._SURFACE.get_width():
+            if Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height():
+                return True
+        return False
 
 
 

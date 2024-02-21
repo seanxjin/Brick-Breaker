@@ -10,7 +10,7 @@ class Box:
     """
     This creates a parent class of a white box that is going to be inherited by other subclasses
     """
-    def __init__(self, WIDTH=10, HEIGHT=10, X=0,Y=0, SPEED=5, COLOR=(255,255,255)):
+    def __init__(self, WIDTH=100, HEIGHT=36, X=0,Y=0, SPEED=5, COLOR=(255,255,255)):
         self.__WIDTH = WIDTH
         self.__HEIGHT = HEIGHT
         self._DIM = (self.__WIDTH, self.__HEIGHT)
@@ -24,17 +24,6 @@ class Box:
         self.__DIR_Y = 1
 
     # MODIFIER METHODS
-    def ADmove(self, KEYS_PRESSED):
-        """
-        Allows the box to be moved through WASD
-        :param KEYS_PRESSED: list[int]
-        :return: none
-        """
-        if KEYS_PRESSED[pygame.K_d] == 1:
-            self.__X = self.__X + self.__SPEED
-        if KEYS_PRESSED[pygame.K_a] == 1:
-            self.__X = self.__X - self.__SPEED
-        self.__POS = (self.__X, self.__Y)
     def WASDmove(self, KEY_PRESSES):
         """
         Move the box based on WASD
@@ -42,13 +31,13 @@ class Box:
         :return: none
         """
         if KEY_PRESSES[pygame.K_d] == 1:
-            self.__X = self.__X + self.__SPEED
-        if KEY_PRESSES[pygame.K_a] == 1:
             self.__X = self.__X - self.__SPEED
+        if KEY_PRESSES[pygame.K_a] == 1:
+            self.__X = self.__X + self.__SPEED
         if KEY_PRESSES[pygame.K_w] == 1:
-            self.__Y = self.__Y - self.__SPEED
-        if KEY_PRESSES[pygame.K_s] == 1:
             self.__Y = self.__Y + self.__SPEED
+        if KEY_PRESSES[pygame.K_s] == 1:
+            self.__Y = self.__Y - self.__SPEED
         self.__POS = (self.__X, self.__Y)
     def setX(self,X):
         """
@@ -83,7 +72,6 @@ class Box:
         :return: none
         """
         self._COLOR = TUPLE
-        self._SURFACE.fill(self._COLOR)
 
     def setWidth(self, WIDTH):
         """
@@ -112,8 +100,22 @@ class Box:
         """
         self.setWidth(WIDTH)
         self.setHeight(HEIGHT)
-
+    def setSpeed(self, SPEED):
+        """
+        Sets the speed of the object
+        :param SPEED: int
+        :return: none
+        """
+        self.__SPEED = SPEED
     def bounceXandY(self, MAX_X, MAX_Y, MIN_Y=0, MIN_X=0):
+        """
+        Bounces the obj when hitting its x and y boundaries
+        :param MAX_X: int
+        :param MAX_Y: int
+        :param MIN_Y: int
+        :param MIN_X: int
+        :return: none
+        """
         self.__X = self.__X + self.__SPEED * self.__DIR_X
         self.__Y = self.__Y + self.__SPEED * self.__DIR_Y
         if self.__X > MAX_X - self.getWidth():
@@ -150,7 +152,13 @@ class Box:
         :return: none
         """
         if self.__X > MAX_X - self.__WIDTH:
-            pass
+            self.__X = MIN_X
+        if self.__X < MIN_X:
+            self.__X = MAX_X
+        if self.__Y > MAX_Y + self.__HEIGHT:
+            self.__Y = MIN_Y
+        if self.__Y < MIN_Y:
+            self.__Y = MAX_Y
     # ACCESSOR METHODS
     def getX(self):
         """
@@ -164,18 +172,19 @@ class Box:
         :return: int
         """
         return self.__Y
+
     def getWidth(self):
         """
         returns the width of the object
         :return: int
         """
-        return self.__WIDTH
+        return self._SURFACE.get_width()
     def getHeight(self):
         """
         returns the height of the object
         :return: int
         """
-        return self.__HEIGHT
+        return self._SURFACE.get_height()
 
     def getDim(self):
         """
@@ -196,3 +205,9 @@ class Box:
         :return: obj
         """
         return self._SURFACE
+    def getSpeed(self):
+        """
+        Gets the speed of the object
+        :return: int
+        """
+        return self.__SPEED
