@@ -127,6 +127,20 @@ class Box:
         if self.__Y < MIN_Y:
             self.__DIR_Y = 1
         self.__POS = (self.__X, self.__Y)
+
+    def collideBounceX(self, X):
+        """
+        Collides on the x
+        :param X: int
+        :return: none
+        """
+
+    def collideBounceY(self, Y):
+        """
+        Collides on the y
+        :param Y: int
+        :return:
+        """
     def isCollision(self, SURFACE, POS):
         """
         Boolean function that checks if an current sprites position is overlapping with another sprite

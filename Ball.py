@@ -36,11 +36,12 @@ class Ball(Box):
         HEIGHT = SURFACE.get_height()
         X = POS[0]
         Y = POS[1]
-        if X >= self.__X - WIDTH and X <= self.__X + self._SURFACE.get_width():
-            if Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height():
-                return True
-        return False
-
+        if X >= self.__X - WIDTH and X <= self.__X + self.getWidth() and Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height():
+                return 1
+        elif X >= self.__X - self.getWidth() and X <= self.__X + self.getWidth() and not Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height():
+            return 2
+        elif Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height() and not X >= self.__X - self.getWidth() and X <= self.__X + self.getWidth():
+            return 3
 
 
 if __name__ == "__main__":
