@@ -25,23 +25,55 @@ class Ball(Box):
         self.setWidth(WIDTH)
         self.setHeight(HEIGHT)
         self._SURFACE.fill(self._COLOR)
-    def isCollision(self, SURFACE, POS):
+    def initiateBallMove(self):
         """
-        Boolean function that checks if a current sprites position is overlapping with another sprite
-        :param SURFACE: object
-        :param POS: tuple -> int
-        :return: bool
+        Initiates the movement of the ball
+        :return: none
         """
-        WIDTH = SURFACE.get_width()
-        HEIGHT = SURFACE.get_height()
-        X = POS[0]
-        Y = POS[1]
-        if X >= self.__X - WIDTH and X <= self.__X + self.getWidth() and Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height():
-                return 1
-        elif X >= self.__X - self.getWidth() and X <= self.__X + self.getWidth() and not Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height():
-            return 2
-        elif Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height() and not X >= self.__X - self.getWidth() and X <= self.__X + self.getWidth():
-            return 3
+        self.setX(self.getX() + self.getSpeed() * self.getDirX())
+        self.setY(self.getY() + self.getSpeed() * self.getDirY())
+    def bounceXandY(self, MAX_X, MIN_Y=0, MIN_X=0):
+        """
+        Bounces the obj when hitting its x and y boundaries
+        :param MAX_X: int
+        :param MAX_Y: int
+        :param MIN_Y: int
+        :param MIN_X: int
+        :return: none
+        """
+        if self.getX() > MAX_X - self.getWidth():
+            self.setDirX(-1)
+        if self.getX() < MIN_X:
+            self.setDirX(1)
+        if self.getY() < MIN_Y:
+            self.setDirY(1)
+        self.setPOS(self.getX(), self.getY())
+    def collideBouncePaddle(self, KEYS_PRESSED):
+        """
+        How the ball behaves when bouncing with the paddle
+        :param SIDE: int
+        :param KEYS_PRESSED: int
+        :return: none
+        """
+        if KEYS_PRESSED[pygame.K_d] and self.getDirX() == 1:
+            self.setSpeed(self.getSpeed() + 1)
+            if self.getSpeed() > 5:
+                self.setSpeed(5)
+            self.setDirY(-1)
+        elif KEYS_PRESSED[pygame.K_a] and self.getDirX() == -1:
+            self.setSpeed(self.getSpeed() + 1)
+            if self.getSpeed() > 5:
+                self.setSpeed(5)
+            self.setDirY(-1)
+        elif not KEYS_PRESSED[pygame.K_a] and not KEYS_PRESSED[pygame.K_d]:
+            self.setDirY(-1)
+        else:
+            self.setSpeed(self.getSpeed() - 1)
+            if self.getSpeed() <= 1:
+                self.setSpeed(2)
+            self.setDirY(-1)
+    def checkLostLife(self):
+
 
 
 if __name__ == "__main__":
@@ -56,8 +88,6 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-
-
         WINDOW.clearScreen()
         WINDOW.getSurface().blit(BALL.getSurface(), BALL.getPOS())
         BALL.bounceXandY(WINDOW.getWidth(), WINDOW.getHeight())

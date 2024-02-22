@@ -35,6 +35,11 @@ class Game:
         """
         # Start Screen Setup
         pygame.init()
+        # Lives the player has
+        LIVES = 3
+        LIVESTEXT = Text(f"Lives: {LIVES}")
+        LIVESTEXT.setPOS(0,0)
+        LIVESTEXT.setColor((63,12,249))
         # Setup Window Class
         GAME_WINDOW = Window("Brick Breaker!")
         # Setup Stars for start screen
@@ -67,7 +72,7 @@ class Game:
                 ROW.append(ADDBRICK)
             BRICKLIST.append(ROW)
         # Setup Paddle
-        PADDLE = Paddle(100, 8)
+        PADDLE = Paddle(175, 8)
         PADDLE.setPOS(GAME_WINDOW.getWidth() // 2 - PADDLE.getWidth() // 2,
                       GAME_WINDOW.getHeight() // 2 - PADDLE.getHeight() // 2 + 250)
         PADDLE.setSpeed(7)
@@ -91,6 +96,7 @@ class Game:
             # Checks if the user has decided to start the game
             if PRESSED_KEYS[pygame.K_1]:
                 break
+        # 1st Level
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -99,9 +105,15 @@ class Game:
             # INPUTS
             PRESSED_KEYS = pygame.key.get_pressed()
             # PROCESSING
+            ## Paddle
             PADDLE.WASDmove(PRESSED_KEYS)
             PADDLE.checkBoundaries(GAME_WINDOW.getWidth())
-            BALL.bounceXandY(GAME_WINDOW.getWidth(), GAME_WINDOW.getHeight())
+            ## Ball
+            BALL.initiateBallMove()
+            BALL.bounceXandY(GAME_WINDOW.getWidth())
+            ## Ball Collide with paddle
+            if PADDLE.isCollision(BALL.getSurface(), BALL.getPOS()):
+                BALL.collideBouncePaddle(PRESSED_KEYS)
             # OUTPUTS
             GAME_WINDOW.clearScreen()
             GAME_WINDOW.getSurface().blit(BALL.getSurface(), BALL.getPOS())
@@ -109,7 +121,7 @@ class Game:
             for i in range(len(BRICKLIST)):
                 for j in range(len(BRICKLIST[i])):
                     GAME_WINDOW.getSurface().blit(BRICKLIST[i][j].getSurface(), BRICKLIST[i][j].getPOS())
-            GAME_WINDOW
+            GAME_WINDOW.getSurface().blit(LIVESTEXT.getSurface(), LIVESTEXT.getPOS())
             GAME_WINDOW.updateFrame()
 
 

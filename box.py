@@ -100,6 +100,20 @@ class Box:
         """
         self.setWidth(WIDTH)
         self.setHeight(HEIGHT)
+    def setDirX(self, X):
+        """
+        Sets the direction of the X
+        :param X: int
+        :return: none
+        """
+        self.__DIR_X = X
+    def setDirY(self, Y):
+        """
+        Sets the direction of the Y
+        :param Y: int
+        :return: none
+        """
+        self.__DIR_Y = Y
     def setSpeed(self, SPEED):
         """
         Sets the speed of the object
@@ -107,55 +121,22 @@ class Box:
         :return: none
         """
         self.__SPEED = SPEED
-    def bounceXandY(self, MAX_X, MAX_Y, MIN_Y=0, MIN_X=0):
-        """
-        Bounces the obj when hitting its x and y boundaries
-        :param MAX_X: int
-        :param MAX_Y: int
-        :param MIN_Y: int
-        :param MIN_X: int
-        :return: none
-        """
-        self.__X = self.__X + self.__SPEED * self.__DIR_X
-        self.__Y = self.__Y + self.__SPEED * self.__DIR_Y
-        if self.__X > MAX_X - self.getWidth():
-            self.__DIR_X = -1
-        if self.__X < MIN_X:
-            self.__DIR_X = 1
-        if self.__Y > MAX_Y - self.getHeight():
-            self.__DIR_Y = -1
-        if self.__Y < MIN_Y:
-            self.__DIR_Y = 1
-        self.__POS = (self.__X, self.__Y)
-
-    def collideBounceX(self, X):
-        """
-        Collides on the x
-        :param X: int
-        :return: none
-        """
-
-    def collideBounceY(self, Y):
-        """
-        Collides on the y
-        :param Y: int
-        :return:
-        """
     def isCollision(self, SURFACE, POS):
         """
-        Boolean function that checks if an current sprites position is overlapping with another sprite
+        Boolean function that checks if a current sprites position is overlapping with another sprite
         :param SURFACE: object
         :param POS: tuple -> int
         :return: bool
         """
+        # Only checks if the 2 sprites collide with one another
         WIDTH = SURFACE.get_width()
         HEIGHT = SURFACE.get_height()
         X = POS[0]
         Y = POS[1]
-        if X >= self.__X - WIDTH and X <= self.__X + self._SURFACE.get_width():
-            if Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height():
-                return True
-        return False
+        if X >= self.__X - WIDTH and X <= self.__X + self.getWidth() and Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height():
+            return True
+        else:
+            return False
     def wrapEdges(self, MAX_X, MAX_Y, MIN_X=0, MIN_Y=0):
         """
         When the object goes off the screen, it appears on the side of the screen
@@ -225,3 +206,15 @@ class Box:
         :return: int
         """
         return self.__SPEED
+    def getDirX(self):
+        """
+        Gets the direction of the object on x
+        :return: int
+        """
+        return self.__DIR_X
+    def getDirY(self):
+        """
+        Gets the direction of the object on y
+        :return: int
+        """
+        return self.__DIR_Y
