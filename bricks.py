@@ -24,39 +24,7 @@ class Bricks(Box):
         self.setWidth(WIDTH)
         self.setHeight(HEIGHT)
         self._SURFACE.fill(self._COLOR)
-    def isCollision(self, SURFACE, POS):
-        """
-        Boolean function that checks if a current sprites position is overlapping with another sprite
-        :param SURFACE: object
-        :param POS: tuple -> int
-        :return: bool
-        """
-        # Polymorphism from the parent class box
-        # Only checks if the 2 sprites collide with one another
-        WIDTH = SURFACE.get_width()
-        HEIGHT = SURFACE.get_height()
-        X = POS[0]
-        Y = POS[1]
-        if X >= self.getX() - WIDTH and X <= self.getX() + self.getWidth() and Y >= self.getY() - HEIGHT and Y <= self.getY() + self.getHeight():
-            # Checks which side the sprites collide on
-            OVERLAP_LEFT = abs((self.getX() - WIDTH) - X) # Closest to the left side
-            OVERLAP_RIGHT = abs((self.getX() + self.getWidth()) - X) # Closest to the right side
-            OVERLAP_TOP = abs((self.getY() - HEIGHT) - Y) # Closest to the top side
-            OVERLAP_BOTTOM = abs((self.getY() + self.getHeight()) - Y) # Closest to the bottom side
-            # Checks the smallest value/distance between the sides to determine which side it hits
-            MIN_OVERLAP = min(OVERLAP_LEFT, OVERLAP_RIGHT, OVERLAP_TOP, OVERLAP_BOTTOM)
-            if MIN_OVERLAP == OVERLAP_LEFT:
-                return 1
-            elif MIN_OVERLAP == OVERLAP_RIGHT:
-                return 2
-            elif MIN_OVERLAP == OVERLAP_TOP:
-                return 3
-            elif MIN_OVERLAP == OVERLAP_BOTTOM:
-                return 4
-            else:
-                return 5
-        else:
-            pass
+
 if __name__ == "__main__":
     from Window import Window
     pygame.init()

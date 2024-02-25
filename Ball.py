@@ -36,7 +36,6 @@ class Ball(Box):
         """
         Bounces the obj when hitting its x and y boundaries
         :param MAX_X: int
-        :param MAX_Y: int
         :param MIN_Y: int
         :param MIN_X: int
         :return: none
@@ -51,29 +50,84 @@ class Ball(Box):
     def collideBouncePaddle(self, KEYS_PRESSED):
         """
         How the ball behaves when bouncing with the paddle
-        :param SIDE: int
         :param KEYS_PRESSED: int
         :return: none
         """
         if KEYS_PRESSED[pygame.K_d] and self.getDirX() == 1:
-            self.setSpeed(self.getSpeed() + 1)
+            self.setSpeed(self.getSpeed() + 0.5)
             if self.getSpeed() > 5:
                 self.setSpeed(5)
             self.setDirY(-1)
         elif KEYS_PRESSED[pygame.K_a] and self.getDirX() == -1:
-            self.setSpeed(self.getSpeed() + 1)
+            self.setSpeed(self.getSpeed() + 0.5)
             if self.getSpeed() > 5:
                 self.setSpeed(5)
             self.setDirY(-1)
         elif not KEYS_PRESSED[pygame.K_a] and not KEYS_PRESSED[pygame.K_d]:
             self.setDirY(-1)
         else:
-            self.setSpeed(self.getSpeed() - 1)
+            self.setSpeed(self.getSpeed() - 0.5)
             if self.getSpeed() <= 1:
                 self.setSpeed(2)
             self.setDirY(-1)
-    def checkLostLife(self):
+    def isCollisionBricks(self, BRICKLIST):
+        """
+        Boolean function that checks if a current sprites position is overlapping with another sprite
+        :param BRICKLIST: 2d array -> list -> object
+        :return: bool
+        """
+        # Polymorphism from the parent class box
+        # Only checks if the 2 sprites collide with one another
+        for i in range(len(BRICKLIST)):
+            for j in range(len(BRICKLIST[i])-1,-1,-1):
+                WIDTH = BRICKLIST[i][j].getWidth()
+                HEIGHT = BRICKLIST[i][j].getHeight()
+                X = BRICKLIST[i][j].getX()
+                Y = BRICKLIST[i][j].getY()
+                if X >= self.getX() - WIDTH and X <= self.getX() + self.getWidth():
+                    if Y >= self.getY() - HEIGHT and Y <= self.getY() + self.getHeight():
+                        BRICKLIST[i].pop(j)
+                        # Checks which side the sprites collide on
+                        OVERLAP_LEFT = abs((self.getX() - WIDTH) - X) # Closest to the left side
+                        OVERLAP_RIGHT = abs((self.getX() + self.getWidth()) - X) # Closest to the right side
+                        OVERLAP_TOP = abs((self.getY() - HEIGHT) - Y) # Closest to the top side
+                        OVERLAP_BOTTOM = abs((self.getY() + self.getHeight()) - Y) # Closest to the bottom side
+                        # Checks the smallest value/distance between the sides to determine which side it hits
+                        MIN_OVERLAP = min(OVERLAP_LEFT, OVERLAP_RIGHT, OVERLAP_TOP, OVERLAP_BOTTOM)
+                        if MIN_OVERLAP == OVERLAP_LEFT or MIN_OVERLAP == OVERLAP_RIGHT:
+                            return 1
+                        elif MIN_OVERLAP == OVERLAP_TOP or MIN_OVERLAP == OVERLAP_BOTTOM:
+                            return 2
+                        elif OVERLAP_BOTTOM == OVERLAP_RIGHT or OVERLAP_BOTTOM == OVERLAP_LEFT or OVERLAP_TOP == OVERLAP_LEFT or OVERLAP_TOP == OVERLAP_RIGHT:
+                            return 3
+                        else:
+                            pass
+                    else:
+                        pass
+    def CollideBounceBrick(self, SIDE):
+        """
+        How the ball behaves when bouncing with a brick
+        :param SIDE: int
+        :return: none
+        """
+        if SIDE == 1:
+            self.setDirX(self.getDirX()*-1)
+        elif SIDE == 2:
+            self.setDirY(self.getDirY()*-1)
+        elif SIDE == 3:
+            self.setDirX(self.getDirX()*-1)
+            self.setDirY(self.getDirY()*-1)
 
+    def checkLostLife(self, MAX_HEIGHT):
+        """
+        Checks the Y position of the ball, if it goes out of bounds it returns true.
+        :param MAX_HEIGHT: int
+        :return: bool
+        """
+        if self.getY() > MAX_HEIGHT - self.getHeight():
+            return True
+        else:
+            return False
 
 
 if __name__ == "__main__":
