@@ -8,11 +8,12 @@ from box import Box
 import pygame
 
 class Text(Box):
-    def __init__(self, TEXT, F_FAMILY="Times New Roman", F_SIZE=36):
+    def __init__(self, TEXT, F_FAMILY="Arial", F_SIZE=36):
         Box.__init__(self)
         self.__TEXT = TEXT
         self.__FONT_FAMILY = F_FAMILY
         self.__FONT_SIZE = F_SIZE
+        pygame.font.init()
         self.__FONT = pygame.font.SysFont(self.__FONT_FAMILY, self.__FONT_SIZE)
         self._SURFACE = self.__FONT.render(self.__TEXT, True, self._COLOR)
 
