@@ -11,6 +11,7 @@ from Ball import Ball
 from bricks import Bricks
 from random import randint
 from text import Text
+import time
 
 class Game:
     def __init__(self):
@@ -115,7 +116,7 @@ class Game:
                 if self.__BALL.checkLostLife(self.__GAME_WINDOW.getHeight()):
                     # Check if they still have lives left
                     if self.__LIVES <= 1:
-                        LOST = Text("""Oh no! You lost :( Press ENTER to return to welcome screen!""")
+                        LOST = Text("""Oh no! You lost :( Press any key to return to welcome screen!""")
                         LOST.setColor((63, 12, 249))
                         LOST.setPOS(self.__GAME_WINDOW.getWidth() // 2 - LOST.getWidth() // 2,
                                     self.__GAME_WINDOW.getHeight() // 2 - LOST.getHeight() // 2)
@@ -126,8 +127,7 @@ class Game:
                         LEVELONE = False
                         # Resets everything
                         # self.__BALL Reset
-                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2,
-                                           (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
+                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
                         self.__BALL.setSpeed(3)
                         # Paddle Reset
                         self.__PLAYER.setPOS(
@@ -150,18 +150,11 @@ class Game:
                                 ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
                                 ROW.append(ADDBRICK)
                             self.__BRICKLIST.append(ROW)
-                        # Buffer
+                        # Stops the loop
+                        time.sleep(2)
                         pygame.event.wait()
                         break
                     if self.__LIVES > 1:
-                        # Tell Player they lost a life
-                        LOST = Text("Oh no! You lost a life! Press any key to continue")
-                        LOST.setColor((63, 12, 249))
-                        LOST.setPOS(self.__GAME_WINDOW.getWidth()//2 - LOST.getWidth()//2, self.__GAME_WINDOW.getHeight()//2 - LOST.getHeight()//2)
-                        self.__GAME_WINDOW.getSurface().blit(LOST.getSurface(), LOST.getPOS())
-                        self.__GAME_WINDOW.updateFrame()
-                        # Buffer
-                        pygame.event.wait()
                         # LIVES UPDATE
                         self.__LIVES = self.__LIVES - 1
                         self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
@@ -178,6 +171,7 @@ class Game:
                 if all(not OBJECT for OBJECT in self.__BRICKLIST):
                     LEVELONE = False
                     LEVELTWO = True
+                    # Reset brick formation for level 2
                     for i in range(len(self.__BRICKLIST)):
                         if i == 0 or i == 5:
                             ADDBRICK = Bricks()
@@ -196,6 +190,15 @@ class Game:
                                 ADDBRICK.setDim(120, 40)
                                 ADDBRICK.setPOS(102.5 + 180 * (j), 40 + i * 45)
                                 self.__BRICKLIST[i].append(ADDBRICK)
+                        # Reset position of paddle and ball for level 2
+                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2,
+                                           (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
+                        self.__BALL.setSpeed(3)
+                        self.__PLAYER.setPOS(
+                            self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
+                            self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
+                        )
+                        self.__PLAYER.setSpeed(7)
                 # OUTPUTS
                 self.__GAME_WINDOW.getSurface().blit(self.__BALL.getSurface(), self.__BALL.getPOS())
                 self.__GAME_WINDOW.getSurface().blit(self.__PLAYER.getSurface(), self.__PLAYER.getPOS())
@@ -235,7 +238,66 @@ class Game:
                                     self.__GAME_WINDOW.getHeight() // 2 - LOST.getHeight() // 2)
                         self.__GAME_WINDOW.getSurface().blit(LOST.getSurface(), LOST.getPOS())
                         self.__GAME_WINDOW.updateFrame()
-                self.__GAME_WINDOW.clearScreen()
+                        # Initiates startscreen and stops the level one while loop
+                        START_SCREEN = True
+                        LEVELONE = False
+                        # Resets everything
+                        # self.__BALL Reset
+                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
+                        self.__BALL.setSpeed(3)
+                        # Paddle Reset
+                        self.__PLAYER.setPOS(
+                            self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
+                            self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
+                        )
+                        self.__PLAYER.setSpeed(7)
+                        # Lives reset
+                        self.__LIVES = 3
+                        self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
+                        self.__LIVESTEXT.setColor((63, 12, 249))
+                        # Reset Bricks
+                        self.__BRICKLIST = []
+                        for i in range(6):
+                            ROW = []
+                            offset_x = 120 if i % 2 == 0 else 180  # Adjust offset_x based on i
+                            for j in range(6):
+                                ADDBRICK = Bricks()
+                                ADDBRICK.setDim(120, 40)
+                                ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
+                                ROW.append(ADDBRICK)
+                            self.__BRICKLIST.append(ROW)
+                        if PRESSED_KEYS[pygame.K_KP_ENTER]:
+                            break
+                    if self.__LIVES > 1:
+                        # Tell Player they lost a life
+                        LOST = Text("Oh no! You lost a life! Press any key to continue")
+                        LOST.setColor((63, 12, 249))
+                        LOST.setPOS(self.__GAME_WINDOW.getWidth()//2 - LOST.getWidth()//2, self.__GAME_WINDOW.getHeight()//2 - LOST.getHeight()//2)
+                        self.__GAME_WINDOW.getSurface().blit(LOST.getSurface(), LOST.getPOS())
+                        self.__GAME_WINDOW.updateFrame()
+                        # LIVES UPDATE
+                        self.__LIVES = self.__LIVES - 1
+                        self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
+                        self.__LIVESTEXT.setColor((63, 12, 249))
+                        # self.__BALL Reset
+                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
+                        self.__BALL.setSpeed(3)
+                        # Paddle Reset
+                        self.__PLAYER.setPOS(
+                            self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2, self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
+                        )
+                        self.__PLAYER.setSpeed(7)
+                if all(not OBJECT for OBJECT in self.__BRICKLIST):
+                    START_SCREEN = True
+                    LEVELTWO = False
+                    WIN = Text("You won!!! Congrats! Press any key to continue!")
+                    WIN.setColor((63, 12, 249))
+                    WIN.setPOS(self.__GAME_WINDOW.getWidth() // 2 - WIN.getWidth() // 2,
+                                self.__GAME_WINDOW.getHeight() // 2 - WIN.getHeight() // 2)
+                    self.__GAME_WINDOW.getSurface().blit(WIN.getSurface(), WIN.getPOS())
+                    if event.type == pygame.KEYDOWN:
+                        break
+                # OUTPUTS
                 self.__GAME_WINDOW.getSurface().blit(self.__BALL.getSurface(), self.__BALL.getPOS())
                 self.__GAME_WINDOW.getSurface().blit(self.__PLAYER.getSurface(), self.__PLAYER.getPOS())
                 for i in range(len(self.__BRICKLIST)):
@@ -244,6 +306,7 @@ class Game:
                                                              self.__BRICKLIST[i][j].getPOS())
                 self.__GAME_WINDOW.getSurface().blit(self.__LIVESTEXT.getSurface(), self.__LIVESTEXT.getPOS())
                 self.__GAME_WINDOW.updateFrame()
+                self.__GAME_WINDOW.clearScreen()
 
 
 
