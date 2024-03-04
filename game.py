@@ -191,9 +191,11 @@ class Game:
                                 ADDBRICK.setPOS(102.5 + 180 * (j), 40 + i * 45)
                                 self.__BRICKLIST[i].append(ADDBRICK)
                         # Reset position of paddle and ball for level 2
-                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2,
-                                           (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
+                        # Ball
+                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
                         self.__BALL.setSpeed(3)
+                        self.__BALL.setDirY(1)
+                        # Paddle
                         self.__PLAYER.setPOS(
                             self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
                             self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
@@ -208,7 +210,6 @@ class Game:
                 self.__GAME_WINDOW.getSurface().blit(self.__LIVESTEXT.getSurface(), self.__LIVESTEXT.getPOS())
                 self.__GAME_WINDOW.updateFrame()
                 self.__GAME_WINDOW.clearScreen()
-
             # 2nd LEVEL
             while LEVELTWO:
                 for event in pygame.event.get():
@@ -242,7 +243,7 @@ class Game:
                         self.__GAME_WINDOW.updateFrame()
                         # Initiates startscreen and stops the level one while loop
                         START_SCREEN = True
-                        LEVELONE = False
+                        LEVELTWO = False
                         # Resets everything
                         # self.__BALL Reset
                         self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
@@ -277,7 +278,7 @@ class Game:
                         self.__LIVES = self.__LIVES - 1
                         self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
                         self.__LIVESTEXT.setColor((63, 12, 249))
-                        # self.__BALL Reset
+                        # BALL Reset
                         self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
                         self.__BALL.setSpeed(3)
                         # Paddle Reset
@@ -286,17 +287,29 @@ class Game:
                         )
                         self.__PLAYER.setSpeed(7)
                 if all(not OBJECT for OBJECT in self.__BRICKLIST):
-                    START_SCREEN = True
                     LEVELTWO = False
-                    WIN = Text("You won!!! Congrats! Press any key to continue!")
-                    WIN.setColor((63, 12, 249))
-                    WIN.setPOS(self.__GAME_WINDOW.getWidth() // 2 - WIN.getWidth() // 2,
-                                self.__GAME_WINDOW.getHeight() // 2 - WIN.getHeight() // 2)
-                    self.__GAME_WINDOW.getSurface().blit(WIN.getSurface(), WIN.getPOS())
-                    self.__GAME_WINDOW.updateFrame()
-                    # Stops the loop, acts as a buffer
-                    time.sleep(2)
-                    pygame.event.wait()
+                    LEVELTHREE = True
+                    # Reset brick formation for level 3
+                    for i in range(len(self.__BRICKLIST)):
+                        for j in range(6):
+                            offset_x = 120 if i % 2 == 0 else 180  # Adjust offset_x based on i
+                            for j in range(6):
+                                ADDBRICK = Bricks()
+                                ADDBRICK.setDim(60, 40)
+                                ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
+                                self.__BRICKLIST[i].append(ADDBRICK)
+                        # Reset position of paddle and ball for level 3
+                        # Ball
+                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2,
+                                           (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
+                        self.__BALL.setSpeed(3)
+                        self.__BALL.setDirY(1)
+                        # Paddle
+                        self.__PLAYER.setPOS(
+                            self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
+                            self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
+                        )
+                        self.__PLAYER.setSpeed(7)
                     break
                 # OUTPUTS
                 self.__GAME_WINDOW.getSurface().blit(self.__BALL.getSurface(), self.__BALL.getPOS())
@@ -309,6 +322,96 @@ class Game:
                 self.__GAME_WINDOW.updateFrame()
                 self.__GAME_WINDOW.clearScreen()
 
+            # 3rd LEVEL
+            while LEVELTHREE:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        exit()
+                # INPUTS
+                PRESSED_KEYS = pygame.key.get_pressed()
+                # PROCESSING
+                ## Paddle
+                self.__PLAYER.WASDmove(PRESSED_KEYS)
+                self.__PLAYER.checkBoundaries(self.__GAME_WINDOW.getWidth())
+                ## BALL
+                self.__BALL.initiateBallMove()
+                self.__BALL.bounceXandY(self.__GAME_WINDOW.getWidth())
+                ## BALL Collide with PLAYER
+                if self.__PLAYER.isCollision(self.__BALL.getSurface(), self.__BALL.getPOS()):
+                    self.__BALL.collideBouncePaddle(PRESSED_KEYS)
+                ## BALL collide with brick
+                BRICK = self.__BALL.isCollisionBricks(self.__BRICKLIST)
+                self.__BALL.CollideBounceBrick(BRICK)
+                ## Lives left & resets the game
+                if self.__BALL.checkLostLife(self.__GAME_WINDOW.getHeight()):
+                    # Check if they still have lives left
+                    if self.__LIVES <= 1:
+                        LOST = Text("""Oh no! You lost :( Press ENTER to return to welcome screen!""")
+                        LOST.setColor((63, 12, 249))
+                        LOST.setPOS(self.__GAME_WINDOW.getWidth() // 2 - LOST.getWidth() // 2,
+                                    self.__GAME_WINDOW.getHeight() // 2 - LOST.getHeight() // 2)
+                        self.__GAME_WINDOW.getSurface().blit(LOST.getSurface(), LOST.getPOS())
+                        self.__GAME_WINDOW.updateFrame()
+                        # Initiates startscreen and stops the level one while loop
+                        START_SCREEN = True
+                        LEVELTHREE = False
+                        # Resets everything
+                        # self.__BALL Reset
+                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (
+                                    self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
+                        self.__BALL.setSpeed(3)
+                        # Paddle Reset
+                        self.__PLAYER.setPOS(
+                            self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
+                            self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
+                        )
+                        self.__PLAYER.setSpeed(7)
+                        # Lives reset
+                        self.__LIVES = 3
+                        self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
+                        self.__LIVESTEXT.setColor((63, 12, 249))
+                        # Reset Bricks
+                        self.__BRICKLIST = []
+                        for i in range(6):
+                            ROW = []
+                            offset_x = 120 if i % 2 == 0 else 180  # Adjust offset_x based on i
+                            for j in range(6):
+                                ADDBRICK = Bricks()
+                                ADDBRICK.setDim(120, 40)
+                                ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
+                                ROW.append(ADDBRICK)
+                            self.__BRICKLIST.append(ROW)
+                            # Stops the loop, acts as a buffer
+                            time.sleep(2)
+                            pygame.event.wait()
+                            break
+                    if self.__LIVES > 1:
+                        # LIVES UPDATE
+                        self.__LIVES = self.__LIVES - 1
+                        self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
+                        self.__LIVESTEXT.setColor((63, 12, 249))
+                        # BALL Reset
+                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (
+                                    self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
+                        self.__BALL.setSpeed(3)
+                        # Paddle Reset
+                        self.__PLAYER.setPOS(
+                            self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
+                            self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
+                        )
+                        self.__PLAYER.setSpeed(7)
+                # OUTPUTS
+                self.__GAME_WINDOW.getSurface().blit(self.__BALL.getSurface(), self.__BALL.getPOS())
+                self.__GAME_WINDOW.getSurface().blit(self.__PLAYER.getSurface(), self.__PLAYER.getPOS())
+                for i in range(len(self.__BRICKLIST)):
+                    for j in range(len(self.__BRICKLIST[i])):
+                        self.__GAME_WINDOW.getSurface().blit(self.__BRICKLIST[i][j].getSurface(),
+                                                             self.__BRICKLIST[i][j].getPOS())
+                self.__GAME_WINDOW.getSurface().blit(self.__LIVESTEXT.getSurface(),
+                                                     self.__LIVESTEXT.getPOS())
+                self.__GAME_WINDOW.updateFrame()
+                self.__GAME_WINDOW.clearScreen()
 
 
 
