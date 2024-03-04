@@ -74,9 +74,8 @@ class Ball(Box):
         """
         Boolean function that checks if a current sprites position is overlapping with another sprite
         :param BRICKLIST: 2d array -> list -> object
-        :return: bool
+        :return: int
         """
-        # Polymorphism from the parent class box
         # Only checks if the 2 sprites collide with one another
         for i in range(len(BRICKLIST)):
             for j in range(len(BRICKLIST[i])-1,-1,-1):
