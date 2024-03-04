@@ -97,8 +97,6 @@ class Ball(Box):
                             return 1
                         elif MIN_OVERLAP == OVERLAP_TOP or MIN_OVERLAP == OVERLAP_BOTTOM:
                             return 2
-                        elif OVERLAP_BOTTOM == OVERLAP_RIGHT or OVERLAP_BOTTOM == OVERLAP_LEFT or OVERLAP_TOP == OVERLAP_LEFT or OVERLAP_TOP == OVERLAP_RIGHT:
-                            return 3
                         else:
                             pass
                     else:
@@ -112,9 +110,6 @@ class Ball(Box):
         if SIDE == 1:
             self.setDirX(self.getDirX()*-1)
         elif SIDE == 2:
-            self.setDirY(self.getDirY()*-1)
-        elif SIDE == 3:
-            self.setDirX(self.getDirX()*-1)
             self.setDirY(self.getDirY()*-1)
 
     def checkLostLife(self, MAX_HEIGHT):
