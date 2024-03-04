@@ -191,17 +191,18 @@ class Game:
                                 ADDBRICK.setDim(120, 40)
                                 ADDBRICK.setPOS(102.5 + 180 * (j), 40 + i * 45)
                                 self.__BRICKLIST[i].append(ADDBRICK)
-                        # Reset position of paddle and ball for level 2
-                        # Ball
-                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
-                        self.__BALL.setSpeed(3)
-                        self.__BALL.setDirY(1)
-                        # Paddle
-                        self.__PLAYER.setPOS(
-                            self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
-                            self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
-                        )
-                        self.__PLAYER.setSpeed(7)
+                    # Reset position of paddle and ball for level 2
+                    # Ball
+                    self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
+                    self.__BALL.setSpeed(3)
+                    self.__BALL.setDirY(1)
+                    # Paddle
+                    self.__PLAYER.setPOS(
+                        self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
+                        self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
+                    )
+                    self.__PLAYER.setSpeed(7)
+                    break
                 # OUTPUTS
                 self.__GAME_WINDOW.getSurface().blit(self.__BALL.getSurface(), self.__BALL.getPOS())
                 self.__GAME_WINDOW.getSurface().blit(self.__PLAYER.getSurface(), self.__PLAYER.getPOS())
@@ -301,18 +302,18 @@ class Game:
                             ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
                             ROW.append(ADDBRICK)
                         self.__BRICKLIST.append(ROW)
-                        # Reset position of paddle and ball for level 3
-                        # Ball
-                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2,
-                                           (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
-                        self.__BALL.setSpeed(3)
-                        self.__BALL.setDirY(1)
-                        # Paddle
-                        self.__PLAYER.setPOS(
-                            self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
-                            self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
-                        )
-                        self.__PLAYER.setSpeed(7)
+                    # Reset position of paddle and ball for level 3
+                    # Ball
+                    self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2,
+                                       (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
+                    self.__BALL.setSpeed(3)
+                    self.__BALL.setDirY(1)
+                    # Paddle
+                    self.__PLAYER.setPOS(
+                        self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
+                        self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
+                    )
+                    self.__PLAYER.setSpeed(7)
                     break
                 # OUTPUTS
                 self.__GAME_WINDOW.getSurface().blit(self.__BALL.getSurface(), self.__BALL.getPOS())
@@ -414,22 +415,22 @@ class Game:
                         offset_x = 120 if i % 2 == 0 else 180  # Adjust offset_x based on i
                         for j in range(6):
                             ADDBRICK = Bricks()
-                            ADDBRICK.setDim(60, 40)
+                            ADDBRICK.setDim(120, 40)
                             ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
                             ROW.append(ADDBRICK)
                         self.__BRICKLIST.append(ROW)
-                        # Reset position of paddle and ball for level 3
-                        # Ball
-                        self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
-                        self.__BALL.setSpeed(3)
-                        self.__BALL.setDirY(1)
-                        # Paddle
-                        self.__PLAYER.setPOS(
-                            self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
-                            self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
-                        )
-                        self.__PLAYER.setSpeed(7)
-                        break
+                    # Reset position of paddle and ball for level 3
+                    # Ball
+                    self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
+                    self.__BALL.setSpeed(3)
+                    self.__BALL.setDirY(1)
+                    # Paddle
+                    self.__PLAYER.setPOS(
+                        self.__GAME_WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
+                        self.__GAME_WINDOW.getHeight() // 2 - self.__PLAYER.getHeight() // 2 + 250
+                    )
+                    self.__PLAYER.setSpeed(7)
+                    break
                 # OUTPUTS
                 self.__GAME_WINDOW.getSurface().blit(self.__BALL.getSurface(), self.__BALL.getPOS())
                 self.__GAME_WINDOW.getSurface().blit(self.__PLAYER.getSurface(), self.__PLAYER.getPOS())
@@ -450,16 +451,19 @@ class Game:
                 # Inputs
                 PRESSED_KEYS = pygame.key.get_pressed()
                 # End screen text/ Process
-                ENDSCREENTEXT = Text("GOOD JOB!! YOU BEAT BRICK BREAKER! Press 1 to play again!")
+                ENDSCREENTEXT = Text("GOOD JOB!! YOU BEAT BRICK BREAKER! Press 2 to play again!")
                 ENDSCREENTEXT.setPOS(self.__GAME_WINDOW.getWidth() // 2 - ENDSCREENTEXT.getWidth()//2, self.__GAME_WINDOW.getHeight() // 2 - ENDSCREENTEXT.getHeight() // 2)
                 ENDSCREENTEXT.setColor((63, 12, 249))
                 self.__GAME_WINDOW.clearScreen()
                 self.__GAME_WINDOW.getSurface().blit(ENDSCREENTEXT.getSurface(), ENDSCREENTEXT.getPOS())
                 self.__GAME_WINDOW.updateFrame()
 
-                # Checks if the player decides to play again
-                if PRESSED_KEYS[pygame.K_1]:
+                # Checks if the player decides to play again and resets their lives
+                if PRESSED_KEYS[pygame.K_2]:
                     START_SCREEN = True
+                    self.__LIVES = 3
+                    self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
+                    self.__LIVESTEXT.setColor((63, 12, 249))
                     END_SCREEN = False
 
 
