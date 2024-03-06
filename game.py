@@ -25,7 +25,7 @@ class Game:
             for j in range(6):
                 ADDBRICK = Bricks()
                 ADDBRICK.setDim(120, 40)
-                ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
+                ADDBRICK.setPOS(offset_x + j * 130, 40 + i * 45)
                 ROW.append(ADDBRICK)
             self.__BRICKLIST.append(ROW)
         # PADDLE
@@ -35,12 +35,12 @@ class Game:
         self.__PLAYER.setSpeed(7)
         # self.__BALL
         self.__BALL = Ball()
-        self.__BALL.setDim(7, 7)
+        self.__BALL.setDim(9, 9)
         self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2,
                     (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
         self.__BALL.setSpeed(3)
         # LIFE
-        self.__LIVES = 99
+        self.__LIVES = 3
         self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
         self.__LIVESTEXT.setPOS(0,0)
         self.__LIVESTEXT.setColor((63,12,249))
@@ -117,7 +117,7 @@ class Game:
                 if self.__BALL.checkLostLife(self.__GAME_WINDOW.getHeight()):
                     # Check if they still have lives left
                     if self.__LIVES <= 1:
-                        LOST = Text("""Oh no! You lost :( Press any key to return to welcome screen!""")
+                        LOST = Text("""Oh no! You lost""")
                         LOST.setColor((63, 12, 249))
                         LOST.setPOS(self.__GAME_WINDOW.getWidth() // 2 - LOST.getWidth() // 2,
                                     self.__GAME_WINDOW.getHeight() // 2 - LOST.getHeight() // 2)
@@ -148,12 +148,11 @@ class Game:
                             for j in range(6):
                                 ADDBRICK = Bricks()
                                 ADDBRICK.setDim(120, 40)
-                                ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
+                                ADDBRICK.setPOS(offset_x + j * 130, 40 + i * 45)
                                 ROW.append(ADDBRICK)
                             self.__BRICKLIST.append(ROW)
                         # Stops the loop, acts as a buffer
                         time.sleep(2)
-                        pygame.event.wait()
                         break
                     if self.__LIVES > 1:
                         # LIVES UPDATE
@@ -237,7 +236,7 @@ class Game:
                 if self.__BALL.checkLostLife(self.__GAME_WINDOW.getHeight()):
                     # Check if they still have lives left
                     if self.__LIVES <= 1:
-                        LOST = Text("""Oh no! You lost :( Press ENTER to return to welcome screen!""")
+                        LOST = Text("""Oh no! You lost :(""")
                         LOST.setColor((63, 12, 249))
                         LOST.setPOS(self.__GAME_WINDOW.getWidth() // 2 - LOST.getWidth() // 2,
                                     self.__GAME_WINDOW.getHeight() // 2 - LOST.getHeight() // 2)
@@ -271,10 +270,9 @@ class Game:
                                 ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
                                 ROW.append(ADDBRICK)
                             self.__BRICKLIST.append(ROW)
-                            # Stops the loop, acts as a buffer
-                            time.sleep(2)
-                            pygame.event.wait()
-                            break
+                        # Stops the loop, acts as a buffer
+                        time.sleep(2)
+                        break
                     if self.__LIVES > 1:
                         # LIVES UPDATE
                         self.__LIVES = self.__LIVES - 1
@@ -351,7 +349,7 @@ class Game:
                 if self.__BALL.checkLostLife(self.__GAME_WINDOW.getHeight()):
                     # Check if they still have lives left
                     if self.__LIVES <= 1:
-                        LOST = Text("""Oh no! You lost :( Press ENTER to return to welcome screen!""")
+                        LOST = Text("""Oh no! You lost :(""")
                         LOST.setColor((63, 12, 249))
                         LOST.setPOS(self.__GAME_WINDOW.getWidth() // 2 - LOST.getWidth() // 2,
                                     self.__GAME_WINDOW.getHeight() // 2 - LOST.getHeight() // 2)
@@ -386,10 +384,9 @@ class Game:
                                 ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
                                 ROW.append(ADDBRICK)
                             self.__BRICKLIST.append(ROW)
-                            # Stops the loop, acts as a buffer
-                            time.sleep(2)
-                            pygame.event.wait()
-                            break
+                        # Stops the loop, acts as a buffer
+                        time.sleep(2)
+                        break
                     if self.__LIVES > 1:
                         # LIVES UPDATE
                         self.__LIVES = self.__LIVES - 1
@@ -408,7 +405,7 @@ class Game:
                 if all(not OBJECT for OBJECT in self.__BRICKLIST):
                     LEVELTHREE = False
                     END_SCREEN = True
-                    # Reset brick formation for level 3
+                    # Reset brick formation for level 1
                     self.__BRICKLIST = []
                     for i in range(6):
                         ROW = []
@@ -419,7 +416,7 @@ class Game:
                             ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
                             ROW.append(ADDBRICK)
                         self.__BRICKLIST.append(ROW)
-                    # Reset position of paddle and ball for level 3
+                    # Reset position of paddle and ball for level 1
                     # Ball
                     self.__BALL.setPOS(self.__GAME_WINDOW.getWidth() // 2 - self.__BALL.getWidth() // 2, (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
                     self.__BALL.setSpeed(3)

@@ -97,6 +97,7 @@ class Ball(Box):
                             return 1
                         elif MIN_OVERLAP == OVERLAP_TOP or MIN_OVERLAP == OVERLAP_BOTTOM:
                             return 2
+
                         else:
                             pass
                     else:
