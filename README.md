@@ -8,3 +8,4 @@ The game "Brick Breaker" is a one-player game, where all bricks on the screen mu
 ## 🗺️🤔💭 Planning Components
 Before the project was coded, some inspiration where taken from the follow images:
 ![Brick Breaker Formation #1](BrickBreakerFormationOne.png)
+![Brick Breaker Formation #2](BrickBreakerFormationTwo.jpg)
