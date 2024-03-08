@@ -74,6 +74,29 @@ class Ball(Box):
             if self.getSpeed() <= 1:
                 self.setSpeed(2)
             self.setDirY(-1)
+    def CollideBounceBrick(self, SIDE):
+        """
+        How the ball behaves when bouncing with a brick
+        :param SIDE: int
+        :return: none
+        """
+        if SIDE == 1:
+            self.setDirX(self.getDirX()*-1)
+        elif SIDE == 2:
+            self.setDirY(self.getDirY()*-1)
+        elif SIDE == 3:
+            self.setDirY(-1)
+            self.setDirX(-1)
+        elif SIDE == 4:
+            self.setDirY(-1)
+            self.setDirX(1)
+        elif SIDE == 5:
+            self.setDirY(1)
+            self.setDirX(-1)
+        elif SIDE == 6:
+            self.setDirY(1)
+            self.setDirX(1)
+    # ACCESSOR METHODS
     def isCollisionBricks(self, BRICKLIST):
         """
         Boolean function that checks if a current sprites position is overlapping with another sprite
@@ -109,28 +132,6 @@ class Ball(Box):
                             return 5
                         elif MIN_OVERLAP == OVERLAP_BOTTOM and MIN_OVERLAP == OVERLAP_RIGHT:
                             return 6
-    def CollideBounceBrick(self, SIDE):
-        """
-        How the ball behaves when bouncing with a brick
-        :param SIDE: int
-        :return: none
-        """
-        if SIDE == 1:
-            self.setDirX(self.getDirX()*-1)
-        elif SIDE == 2:
-            self.setDirY(self.getDirY()*-1)
-        elif SIDE == 3:
-            self.setDirY(-1)
-            self.setDirX(-1)
-        elif SIDE == 4:
-            self.setDirY(-1)
-            self.setDirX(1)
-        elif SIDE == 5:
-            self.setDirY(1)
-            self.setDirX(-1)
-        elif SIDE == 6:
-            self.setDirY(1)
-            self.setDirX(1)
     def checkLostLife(self, MAX_HEIGHT):
         """
         Checks the Y position of the ball, if it goes out of bounds it returns true.
