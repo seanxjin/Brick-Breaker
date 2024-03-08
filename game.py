@@ -137,7 +137,7 @@ class Game:
                         )
                         self.__PLAYER.setSpeed(7)
                         # Lives reset
-                        self.__LIVES = 3
+                        self.__LIVES = 5
                         self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
                         self.__LIVESTEXT.setColor((63, 12, 249))
                         # Reset Bricks
@@ -256,7 +256,7 @@ class Game:
                         )
                         self.__PLAYER.setSpeed(7)
                         # Lives reset
-                        self.__LIVES = 3
+                        self.__LIVES = 5
                         self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
                         self.__LIVESTEXT.setColor((63, 12, 249))
                         # Reset Bricks
@@ -370,7 +370,7 @@ class Game:
                         )
                         self.__PLAYER.setSpeed(7)
                         # Lives reset
-                        self.__LIVES = 3
+                        self.__LIVES = 5
                         self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
                         self.__LIVESTEXT.setColor((63, 12, 249))
                         # Reset Bricks
@@ -458,7 +458,7 @@ class Game:
                 # Checks if the player decides to play again and resets their lives
                 if PRESSED_KEYS[pygame.K_2]:
                     START_SCREEN = True
-                    self.__LIVES = 3
+                    self.__LIVES = 5
                     self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
                     self.__LIVESTEXT.setColor((63, 12, 249))
                     END_SCREEN = False
