@@ -40,7 +40,7 @@ class Game:
                     (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
         self.__BALL.setSpeed(3)
         # LIFE
-        self.__LIVES = 999
+        self.__LIVES = 5
         self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
         self.__LIVESTEXT.setPOS(0,0)
         self.__LIVESTEXT.setColor((63,12,249))
