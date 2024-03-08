@@ -121,22 +121,6 @@ class Box:
         :return: none
         """
         self.__SPEED = SPEED
-    def isCollision(self, SURFACE, POS):
-        """
-        Boolean function that checks if a current sprites position is overlapping with another sprite
-        :param SURFACE: object
-        :param POS: tuple -> int
-        :return: bool
-        """
-        # Only checks if the 2 sprites collide with one another
-        WIDTH = SURFACE.get_width()
-        HEIGHT = SURFACE.get_height()
-        X = POS[0]
-        Y = POS[1]
-        if X >= self.__X - WIDTH and X <= self.__X + self.getWidth() and Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height():
-            return True
-        else:
-            return False
     def wrapEdges(self, MAX_X, MAX_Y, MIN_X=0, MIN_Y=0):
         """
         When the object goes off the screen, it appears on the side of the screen
@@ -155,6 +139,22 @@ class Box:
         if self.__Y < MIN_Y:
             self.__Y = MAX_Y
     # ACCESSOR METHODS
+    def isCollision(self, SURFACE, POS):
+        """
+        Boolean function that checks if a current sprites position is overlapping with another sprite
+        :param SURFACE: object
+        :param POS: tuple -> int
+        :return: bool
+        """
+        # Only checks if the 2 sprites collide with one another
+        WIDTH = SURFACE.get_width()
+        HEIGHT = SURFACE.get_height()
+        X = POS[0]
+        Y = POS[1]
+        if X >= self.__X - WIDTH and X <= self.__X + self.getWidth() and Y >= self.__Y - HEIGHT and Y <= self.__Y + self._SURFACE.get_height():
+            return True
+        else:
+            return False
     def getX(self):
         """
         returns the X position of the object
