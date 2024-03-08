@@ -17,7 +17,7 @@ class Game:
     def __init__(self):
         # WINDOW
         self.__GAME_WINDOW = Window("Brick Breaker!")
-        # LEVEL ONE BRICKS
+        # LEVEL ONE BRICKS (Example of Aggregation)
         self.__BRICKLIST = []
         for i in range(6):
             ROW = []
@@ -25,7 +25,7 @@ class Game:
             for j in range(6):
                 ADDBRICK = Bricks()
                 ADDBRICK.setDim(120, 40)
-                ADDBRICK.setPOS(offset_x + j * 130, 40 + i * 45)
+                ADDBRICK.setPOS(offset_x + j * 130, 40 + i * 50)
                 ROW.append(ADDBRICK)
             self.__BRICKLIST.append(ROW)
         # PADDLE
@@ -40,7 +40,7 @@ class Game:
                     (self.__GAME_WINDOW.getHeight() // 2 - self.__BALL.getHeight() // 2) + 100)
         self.__BALL.setSpeed(3)
         # LIFE
-        self.__LIVES = 3
+        self.__LIVES = 999
         self.__LIVESTEXT = Text(f"Lives: {self.__LIVES}")
         self.__LIVESTEXT.setPOS(0,0)
         self.__LIVESTEXT.setColor((63,12,249))
@@ -58,7 +58,7 @@ class Game:
         LEVELTHREE = False
         END_SCREEN = False
         while True:
-            # Setup Stars for start screen
+            # Setup Stars for start screen (Aggregation)
             START_SCREEN_STARS = []
             for i in range(200):
                 WIDTH = randint(3, 5)
@@ -103,7 +103,7 @@ class Game:
                 # PROCESSING
                 ## Paddle
                 self.__PLAYER.WASDmove(PRESSED_KEYS)
-                self.__PLAYER.checkBoundaries(self.__GAME_WINDOW.getWidth())
+                self.__PLAYER.wrapEdges(self.__GAME_WINDOW.getWidth())
                 ## BALL
                 self.__BALL.initiateBallMove()
                 self.__BALL.bounceXandY(self.__GAME_WINDOW.getWidth())
@@ -148,7 +148,7 @@ class Game:
                             for j in range(6):
                                 ADDBRICK = Bricks()
                                 ADDBRICK.setDim(120, 40)
-                                ADDBRICK.setPOS(offset_x + j * 130, 40 + i * 45)
+                                ADDBRICK.setPOS(offset_x + j * 130, 40 + i * 50)
                                 ROW.append(ADDBRICK)
                             self.__BRICKLIST.append(ROW)
                         # Stops the loop, acts as a buffer
@@ -176,19 +176,19 @@ class Game:
                         if i == 0 or i == 5:
                             ADDBRICK = Bricks()
                             ADDBRICK.setDim(120, 40)
-                            ADDBRICK.setPOS(self.__GAME_WINDOW.getWidth() // 2 - ADDBRICK.getWidth() // 2, 40 + i * 45)
+                            ADDBRICK.setPOS(self.__GAME_WINDOW.getWidth() // 2 - ADDBRICK.getWidth() // 2, 40 + i * 50)
                             self.__BRICKLIST[i].append(ADDBRICK)
                         if i == 1 or i == 4:
                             for j in range(3):
                                 ADDBRICK = Bricks()
                                 ADDBRICK.setDim(120, 40)
-                                ADDBRICK.setPOS(282.5 + 180 * (j), 40 + i * 45)
+                                ADDBRICK.setPOS(282.5 + 180 * (j), 40 + i * 50)
                                 self.__BRICKLIST[i].append(ADDBRICK)
                         if i == 2 or i == 3:
                             for j in range(5):
                                 ADDBRICK = Bricks()
                                 ADDBRICK.setDim(120, 40)
-                                ADDBRICK.setPOS(102.5 + 180 * (j), 40 + i * 45)
+                                ADDBRICK.setPOS(102.5 + 180 * (j), 40 + i * 50)
                                 self.__BRICKLIST[i].append(ADDBRICK)
                     # Reset position of paddle and ball for level 2
                     # Ball
@@ -222,7 +222,7 @@ class Game:
                 # PROCESSING
                 ## Paddle
                 self.__PLAYER.WASDmove(PRESSED_KEYS)
-                self.__PLAYER.checkBoundaries(self.__GAME_WINDOW.getWidth())
+                self.__PLAYER.wrapEdges(self.__GAME_WINDOW.getWidth())
                 ## BALL
                 self.__BALL.initiateBallMove()
                 self.__BALL.bounceXandY(self.__GAME_WINDOW.getWidth())
@@ -267,7 +267,7 @@ class Game:
                             for j in range(6):
                                 ADDBRICK = Bricks()
                                 ADDBRICK.setDim(120, 40)
-                                ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
+                                ADDBRICK.setPOS(offset_x + j * 130, 40 + i * 50)
                                 ROW.append(ADDBRICK)
                             self.__BRICKLIST.append(ROW)
                         # Stops the loop, acts as a buffer
@@ -335,7 +335,7 @@ class Game:
                 # PROCESSING
                 ## Paddle
                 self.__PLAYER.WASDmove(PRESSED_KEYS)
-                self.__PLAYER.checkBoundaries(self.__GAME_WINDOW.getWidth())
+                self.__PLAYER.wrapEdges(self.__GAME_WINDOW.getWidth())
                 ## BALL
                 self.__BALL.initiateBallMove()
                 self.__BALL.bounceXandY(self.__GAME_WINDOW.getWidth())
@@ -381,7 +381,7 @@ class Game:
                             for j in range(6):
                                 ADDBRICK = Bricks()
                                 ADDBRICK.setDim(120, 40)
-                                ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
+                                ADDBRICK.setPOS(offset_x + j * 130, 40 + i * 50)
                                 ROW.append(ADDBRICK)
                             self.__BRICKLIST.append(ROW)
                         # Stops the loop, acts as a buffer
@@ -413,7 +413,7 @@ class Game:
                         for j in range(6):
                             ADDBRICK = Bricks()
                             ADDBRICK.setDim(120, 40)
-                            ADDBRICK.setPOS(offset_x + j * 125, 40 + i * 45)
+                            ADDBRICK.setPOS(offset_x + j * 130, 40 + i * 50)
                             ROW.append(ADDBRICK)
                         self.__BRICKLIST.append(ROW)
                     # Reset position of paddle and ball for level 1

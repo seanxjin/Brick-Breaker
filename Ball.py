@@ -9,18 +9,22 @@ import pygame
 
 class Ball(Box):
     def __init__(self, WIDTH=2, HEIGHT=2):
+        # Inheritance from Box class
         Box.__init__(self, WIDTH, HEIGHT)
         self._SURFACE = pygame.Surface(self._DIM, pygame.SRCALPHA, 32)
         self._SURFACE.fill(self._COLOR)
 
     # MODIFIER METHODS
+    ## Polymorphism from parent class box
     def setWidth(self, WIDTH):
         Box.setWidth(self, WIDTH)
         self._SURFACE = pygame.Surface(self._DIM, pygame.SRCALPHA, 32)
 
+    ## Polymorphism from parent class box
     def setHeight(self, HEIGHT):
         Box.setHeight(self,HEIGHT)
         self._SURFACE = pygame.Surface(self._DIM, pygame.SRCALPHA, 32)
+    ## Polymorphism from parent class box
     def setDim(self, WIDTH, HEIGHT):
         self.setWidth(WIDTH)
         self.setHeight(HEIGHT)
@@ -97,11 +101,14 @@ class Ball(Box):
                             return 1
                         elif MIN_OVERLAP == OVERLAP_TOP or MIN_OVERLAP == OVERLAP_BOTTOM:
                             return 2
-
-                        else:
-                            pass
-                    else:
-                        pass
+                        elif MIN_OVERLAP == OVERLAP_TOP and MIN_OVERLAP == OVERLAP_LEFT:
+                            return 3
+                        elif MIN_OVERLAP == OVERLAP_TOP and MIN_OVERLAP == OVERLAP_RIGHT:
+                            return 4
+                        elif MIN_OVERLAP == OVERLAP_BOTTOM and MIN_OVERLAP == OVERLAP_LEFT:
+                            return 5
+                        elif MIN_OVERLAP == OVERLAP_BOTTOM and MIN_OVERLAP == OVERLAP_RIGHT:
+                            return 6
     def CollideBounceBrick(self, SIDE):
         """
         How the ball behaves when bouncing with a brick
@@ -112,7 +119,18 @@ class Ball(Box):
             self.setDirX(self.getDirX()*-1)
         elif SIDE == 2:
             self.setDirY(self.getDirY()*-1)
-
+        elif SIDE == 3:
+            self.setDirY(-1)
+            self.setDirX(-1)
+        elif SIDE == 4:
+            self.setDirY(-1)
+            self.setDirX(1)
+        elif SIDE == 5:
+            self.setDirY(1)
+            self.setDirX(-1)
+        elif SIDE == 6:
+            self.setDirY(1)
+            self.setDirX(1)
     def checkLostLife(self, MAX_HEIGHT):
         """
         Checks the Y position of the ball, if it goes out of bounds it returns true.

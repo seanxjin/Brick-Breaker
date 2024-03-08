@@ -10,10 +10,12 @@ from box import Box
 class Paddle(Box):
     # Constructor
     def __init__(self, WIDTH=200, HEIGHT=8):
+        # Inheritance from box class
         Box.__init__(self, WIDTH, HEIGHT)
         self._SURFACE = pygame.Surface(self._DIM, pygame.SRCALPHA, 32)
         self._SURFACE.fill(self._COLOR)
 
+    # Polymorphism from box class
     def WASDmove(self, KEYS_PRESSED):
         """
         Allows the paddle to be moved through WASD
@@ -24,7 +26,9 @@ class Paddle(Box):
             self.setX(self.getX()+self.getSpeed())
         if KEYS_PRESSED[pygame.K_a] == 1:
             self.setX(self.getX()-self.getSpeed())
-    def checkBoundaries(self, MAX_X, MIN_X=0):
+
+    # Polymorphism from box class
+    def wrapEdges(self, MAX_X, MAX_Y=600, MIN_X=0, MIN_Y=0):
         """
         Checks the bounderies of the paddle and prevents it from going offscreen
         :param MAX_X: int

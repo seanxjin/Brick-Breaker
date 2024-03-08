@@ -9,6 +9,7 @@ import pygame
 class Bricks(Box):
     def __init__(self):
         Box.__init__(self)
+        # Inheritance from box class
         self._SURFACE = pygame.Surface(self._DIM, pygame.SRCALPHA, 32)
         self._SURFACE.fill(self._COLOR)
 
